@@ -229,7 +229,7 @@ export default function ExhibitionsManager() {
               </label>
               <FileUpload
                 accept="image/*"
-                bucket="blog-media"
+                bucket="artworks"
                 onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
                 currentUrl={formData.image_url}
               />

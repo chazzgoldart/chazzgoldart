@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Upload, X, Check } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
 
 interface FileUploadProps {
   accept: string;
@@ -87,43 +86,42 @@ export const FileUpload = ({ accept, bucket, onUploadComplete, onFileUploaded, o
       };
       reader.readAsDataURL(file);
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        alert('You must be logged in to upload files. Please sign in and try again.');
-        setPreview(null);
-        setUploading(false);
-        return;
-      }
-
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = fileName;
 
-      const { error: uploadError } = await supabase.storage
-        .from(bucket)
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
+      // Convert file to base64 for API
+      const fileBuffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(fileBuffer);
+      let binary = '';
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      const base64 = btoa(binary);
 
-      if (uploadError) {
-        console.error('Upload error details:', {
-          message: uploadError.message,
-          error: uploadError
-        });
-        alert(`Upload failed: ${uploadError.message || 'Unknown error'}. Check console for details.`);
-        throw uploadError;
+      // Upload via Vercel API
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          file: base64,
+          filename: fileName,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Upload failed');
       }
 
-      const { data: { publicUrl } } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(filePath);
+      const { url } = await response.json();
 
       if (onUploadComplete) {
-        onUploadComplete(publicUrl);
+        onUploadComplete(url);
       }
       if (onFileUploaded) {
-        onFileUploaded(publicUrl);
+        onFileUploaded(url);
       }
     } catch (error) {
       console.error('Upload error:', error);

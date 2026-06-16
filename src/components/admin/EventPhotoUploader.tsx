@@ -68,27 +68,36 @@ export default function EventPhotoUploader({ event, onPhotoUploaded }: EventPhot
         return;
       }
 
-      // Use blog-media bucket which has no MIME type restrictions
       const fileExt = file.name.split('.').pop();
       const fileName = `events/${event.id}/${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('blog-media')
-        .upload(fileName, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
+      // Convert file to base64 for API
+      const fileBuffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(fileBuffer);
+      let binary = '';
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      const base64 = btoa(binary);
 
-      if (uploadError) {
-        console.error('Upload error:', uploadError);
-        alert(`Upload failed: ${uploadError.message}`);
-        setUploading(false);
-        return;
+      // Upload via Vercel API
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          file: base64,
+          filename: fileName,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Upload failed');
       }
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('blog-media')
-        .getPublicUrl(fileName);
+      const { url: publicUrl } = await response.json();
 
       // Save photo record to database
       const { error: dbError } = await supabase
