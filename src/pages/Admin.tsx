@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Image, Plus, FileText, User, ImageIcon, Images, Link2, MessagesSquare, Layers, Box, BookImage, Calendar, Eye, Download } from 'lucide-react';
+import { LogOut, Image, Plus, FileText, User, ImageIcon, Images, Link2, MessagesSquare, Layers, Box, BookImage, Calendar, Eye } from 'lucide-react';
 import { ArtworkManager } from '../components/admin/ArtworkManager';
 import { PlatformManager } from '../components/admin/PlatformManager';
 import { CollectionManager } from '../components/admin/CollectionManager';
@@ -19,22 +19,12 @@ import EventsManager from '../components/admin/EventsManager';
 import ExhibitionsManager from '../components/admin/ExhibitionsManager';
 import PhotoModerationManager from '../components/admin/PhotoModerationManager';
 
-import GoogleDriveSyncManager from '../components/admin/GoogleDriveSyncManager';
-
-type Tab = 'artworks' | 'platforms' | 'hero' | 'parallax' | 'slideshow' | 'gallery' | 'collections' | 'blog' | 'blog-gallery' | 'artist' | 'exhibitions' | 'social' | 'contact' | 'featured-boxes' | 'events' | 'photos' | 'drive-sync' | 'auto-sync';
+type Tab = 'artworks' | 'platforms' | 'hero' | 'parallax' | 'slideshow' | 'gallery' | 'collections' | 'blog' | 'blog-gallery' | 'artist' | 'exhibitions' | 'social' | 'contact' | 'featured-boxes' | 'events' | 'photos';
 
 export const Admin = () => {
   const { user, session, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>('artworks');
-  const [isOAuthCallback, setIsOAuthCallback] = useState(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('code') && params.has('state')) {
-      setIsOAuthCallback(true);
-    }
-  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -43,7 +33,7 @@ export const Admin = () => {
 
   const isAdmin = session?.user?.app_metadata?.is_admin === true;
 
-  if (loading || isOAuthCallback) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 flex items-center justify-center">
         <div className="text-white">Loading...</div>
@@ -297,19 +287,6 @@ export const Admin = () => {
               Photo Moderation
             </div>
           </button>
-          <button
-            onClick={() => setActiveTab('auto-sync')}
-            className={`px-6 py-3 rounded-full font-semibold transition-all whitespace-nowrap ${
-              activeTab === 'auto-sync'
-                ? 'bg-gradient-to-r from-cyan-500 to-pink-500 glow-cyan'
-                : 'glass-card hover:border-cyan-400'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Auto-Sync Setup
-            </div>
-          </button>
         </div>
 
         <div className="glass-card rounded-2xl p-6">
@@ -329,7 +306,6 @@ export const Admin = () => {
           {activeTab === 'featured-boxes' && <FeaturedArtBoxesManager />}
           {activeTab === 'events' && <EventsManager />}
           {activeTab === 'photos' && <PhotoModerationManager />}
-          {activeTab === 'auto-sync' && <GoogleDriveSyncManager />}
         </div>
       </div>
     </div>

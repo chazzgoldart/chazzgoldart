@@ -12,7 +12,6 @@ export default function EventsManager() {
     slug: '',
     display_name: '',
     cover_image_url: '',
-    google_drive_folder_id: '',
     auto_approve_photos: false,
     sync_interval_minutes: 5
   });
@@ -48,7 +47,6 @@ export default function EventsManager() {
             slug: formData.slug,
             display_name: formData.display_name,
             cover_image_url: formData.cover_image_url || null,
-            google_drive_folder_id: formData.google_drive_folder_id || null,
             auto_approve_photos: formData.auto_approve_photos,
             sync_interval_minutes: formData.sync_interval_minutes,
             updated_at: new Date().toISOString()
@@ -63,7 +61,6 @@ export default function EventsManager() {
             slug: formData.slug,
             display_name: formData.display_name,
             cover_image_url: formData.cover_image_url || null,
-            google_drive_folder_id: formData.google_drive_folder_id || null,
             auto_approve_photos: formData.auto_approve_photos,
             sync_interval_minutes: formData.sync_interval_minutes
           });
@@ -75,7 +72,6 @@ export default function EventsManager() {
         slug: '',
         display_name: '',
         cover_image_url: '',
-        google_drive_folder_id: '',
         auto_approve_photos: false,
         sync_interval_minutes: 5
       });
@@ -94,7 +90,6 @@ export default function EventsManager() {
       slug: event.slug,
       display_name: event.display_name,
       cover_image_url: event.cover_image_url || '',
-      google_drive_folder_id: event.google_drive_folder_id || '',
       auto_approve_photos: event.auto_approve_photos,
       sync_interval_minutes: event.sync_interval_minutes
     });
@@ -125,7 +120,6 @@ export default function EventsManager() {
       slug: '',
       display_name: '',
       cover_image_url: '',
-      google_drive_folder_id: '',
       auto_approve_photos: false,
       sync_interval_minutes: 5
     });
@@ -197,22 +191,6 @@ export default function EventsManager() {
                 className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white"
                 placeholder="https://..."
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Google Drive Folder ID (optional)
-              </label>
-              <input
-                type="text"
-                value={formData.google_drive_folder_id}
-                onChange={(e) => setFormData({ ...formData, google_drive_folder_id: e.target.value })}
-                className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white"
-                placeholder="1a2b3c4d5e6f7g8h9i0j"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Used for syncing photos from Google Drive
-              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -294,11 +272,6 @@ export default function EventsManager() {
                 <div>
                   <h3 className="text-white font-semibold">{event.display_name}</h3>
                   <p className="text-gray-400 text-sm">/events/{event.slug}</p>
-                  {event.google_drive_folder_id && (
-                    <p className="text-gray-500 text-xs mt-1">
-                      Drive: {event.google_drive_folder_id}
-                    </p>
-                  )}
                 </div>
               </div>
 
