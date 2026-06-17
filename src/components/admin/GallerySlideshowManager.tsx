@@ -156,7 +156,6 @@ export const GallerySlideshowManager = () => {
       <div className="glass-card p-6">
         <h3 className="text-lg font-semibold mb-4">Upload New Image</h3>
         <FileUpload
-          bucket="gallery-slideshow"
           onUploadComplete={handleUpload}
           accept="image/*"
           disabled={uploading}

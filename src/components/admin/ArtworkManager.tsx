@@ -231,7 +231,6 @@ export const ArtworkManager = () => {
           <div>
             <label className="block text-sm font-semibold mb-2">Thumbnail Image</label>
             <FileUpload
-              bucket="artworks"
               accept="image/*"
               onUpload={async (file: File) => {
                 const url = await handleMediaUpload(file, 'thumb');
@@ -246,7 +245,6 @@ export const ArtworkManager = () => {
               {formData.media_type === 'video' ? 'Video File' : 'Full Image'}
             </label>
             <FileUpload
-              bucket="artworks"
               accept={formData.media_type === 'video' ? 'video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.mov,.webm,.avi' : 'image/*'}
               onUpload={async (file: File) => {
                 const url = await handleMediaUpload(file, 'media');

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
 import { Event } from '../../types';
 import { Link, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react';
 
@@ -86,7 +85,7 @@ export default function GoogleDriveConnect({ event, onConnected }: GoogleDriveCo
   };
 
   const handleManualSync = async () => {
-    if (!event.google_refresh_token) {
+    if (!event.google_drive_folder_id) {
       setStatus('Please connect Google Drive first');
       return;
     }
@@ -127,7 +126,7 @@ export default function GoogleDriveConnect({ event, onConnected }: GoogleDriveCo
     }
   };
 
-  const isConnected = !!event.google_refresh_token;
+  const isConnected = !!event.google_drive_folder_id;
   const lastSynced = event.last_synced_at
     ? new Date(event.last_synced_at).toLocaleString()
     : 'Never';

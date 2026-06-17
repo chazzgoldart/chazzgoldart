@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Event } from '../../types';
-import { Upload, X } from 'lucide-react';
+import { Upload } from 'lucide-react';
 
 interface EventPhotoUploaderProps {
   event: Event;

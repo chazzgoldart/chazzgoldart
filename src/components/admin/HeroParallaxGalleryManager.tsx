@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Upload, Trash2, Save } from 'lucide-react';
+import { Upload, Trash2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 interface ParallaxImage {

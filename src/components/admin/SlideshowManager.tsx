@@ -121,7 +121,6 @@ export const SlideshowManager = () => {
             <div>
               <label className="block text-sm font-medium mb-2">Image</label>
               <FileUpload
-                bucket="slideshow"
                 onFileUploaded={handleFileUploaded}
                 accept="image/*,video/*"
               />

@@ -18,7 +18,7 @@ import { GalleryManager } from '../components/admin/GalleryManager';
 import EventsManager from '../components/admin/EventsManager';
 import ExhibitionsManager from '../components/admin/ExhibitionsManager';
 import PhotoModerationManager from '../components/admin/PhotoModerationManager';
-import GoogleDriveSync from '../components/admin/GoogleDriveSync';
+
 import GoogleDriveSyncManager from '../components/admin/GoogleDriveSyncManager';
 
 type Tab = 'artworks' | 'platforms' | 'hero' | 'parallax' | 'slideshow' | 'gallery' | 'collections' | 'blog' | 'blog-gallery' | 'artist' | 'exhibitions' | 'social' | 'contact' | 'featured-boxes' | 'events' | 'photos' | 'drive-sync' | 'auto-sync';

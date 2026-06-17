@@ -120,8 +120,7 @@ export const ArtistSectionManager = () => {
               Artist Image
             </label>
             <FileUpload
-              bucket="artworks"
-              onUpload={handleImageUpload}
+              onUploadComplete={handleImageUpload}
               accept="image/*"
               currentUrl={section.image_url}
             />

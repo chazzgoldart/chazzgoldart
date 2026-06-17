@@ -160,7 +160,6 @@ export const HeroSlideshowManager = () => {
             </label>
             <FileUpload
               accept="image/*"
-              bucket="hero-slideshow"
               onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
               currentUrl={formData.image_url}
             />

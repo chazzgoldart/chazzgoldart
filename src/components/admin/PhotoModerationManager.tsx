@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Event, Photo } from '../../types';
-import { Eye, EyeOff, Trash2, Check, X } from 'lucide-react';
+import { Eye, EyeOff, Trash2, Check } from 'lucide-react';
 import EventPhotoUploader from './EventPhotoUploader';
 
 export default function PhotoModerationManager() {

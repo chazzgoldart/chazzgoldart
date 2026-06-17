@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { FileUpload } from './FileUpload';
-import { Plus, Edit2, Trash2, Calendar, Save, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, Save } from 'lucide-react';
 
 interface Exhibition {
   id: string;
@@ -229,7 +229,6 @@ export default function ExhibitionsManager() {
               </label>
               <FileUpload
                 accept="image/*"
-                bucket="artworks"
                 onUploadComplete={(url) => setFormData({ ...formData, image_url: url })}
                 currentUrl={formData.image_url}
               />

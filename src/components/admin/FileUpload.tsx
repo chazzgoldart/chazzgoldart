@@ -3,7 +3,6 @@ import { Upload, X, Check } from 'lucide-react';
 
 interface FileUploadProps {
   accept: string;
-  bucket: string;
   onUploadComplete?: (url: string) => void;
   onFileUploaded?: (url: string) => void;
   onUpload?: (file: File) => Promise<void>;
@@ -11,7 +10,7 @@ interface FileUploadProps {
   disabled?: boolean;
 }
 
-export const FileUpload = ({ accept, bucket, onUploadComplete, onFileUploaded, onUpload, currentUrl, disabled }: FileUploadProps) => {
+export const FileUpload = ({ accept, onUploadComplete, onFileUploaded, onUpload, currentUrl, disabled }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(currentUrl || null);

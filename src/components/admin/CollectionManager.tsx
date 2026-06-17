@@ -175,7 +175,6 @@ export const CollectionManager = () => {
               Collection {formData.media_type === 'video' ? 'Video' : 'Image'}
             </label>
             <FileUpload
-              bucket="collections"
               accept={formData.media_type === 'video' ? 'video/*' : 'image/*'}
               onUpload={handleImageUpload}
               currentUrl={formData.image_url}
