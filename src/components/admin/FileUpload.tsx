@@ -63,10 +63,10 @@ export const FileUpload = ({ accept, onUploadComplete, onFileUploaded, onUpload,
       sizeInMB: (file.size / 1024 / 1024).toFixed(2) + ' MB'
     });
 
-    const maxSize = 50 * 1024 * 1024;
+    const maxSize = 500 * 1024 * 1024; // 500MB
 
     if (file.size > maxSize) {
-      alert('File size exceeds 50 MB limit. Please compress your video or use a smaller file.');
+      alert('File size exceeds 500 MB limit. Please compress your file or use a smaller file.');
       return;
     }
 
